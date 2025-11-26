@@ -8,8 +8,7 @@ const isElderFourteen = (date) => {
     const birthDate = new Date(date).getTime();
     const now = new Date().getTime();
     const age = new Date(now - birthDate).getFullYear() - 1970;
-    return age;
-      
+    return age < 14 ? false : true;      
 }
 
 console.log(isElderFourteen('2000-01-01'));
