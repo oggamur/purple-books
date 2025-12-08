@@ -1,15 +1,18 @@
-const isElderFourteen = (date) => {
-    const regExp = /\d\d\d\d-\d\d-\d\d/;
+const timer = document.querySelector('.new-year-timer');
 
-    if (!regExp.test(date)){
-      return 'Введите день рождения в формате ГГГГ-ММ-ДД';
-    }
-
-    const birthDate = new Date(date).getTime();
-    const now = new Date().getTime();
-    const age = new Date(now - birthDate).getFullYear() - 1970;
-    return age < 14 ? false : true;      
+function setTimer () {
+  setInterval(() => {
+    const date = new Date();
+    const newYear = new Date(date.getFullYear() + 1, 0, 1);
+    const months = Math.floor((newYear - date) / 1000 / 60 / 60 / 24 / 30);
+    const days = Math.floor((newYear - date) / 1000 / 60 / 60 / 24) - months * 30;
+    const hours = Math.floor((newYear - date) / 1000 / 60 / 60) % 24;
+    const minutes = Math.floor((newYear - date) / 1000 / 60) % 60;
+    const seconds = Math.floor((newYear - date) / 1000) % 60;
+    
+    const time = `${months} месяцев ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
+    timer.innerHTML = time;
+  }, 1000);
 }
 
-console.log(isElderFourteen('2000-01-01'));
-console.log(isElderFourteen('2012-11-27'));
+setTimer();
