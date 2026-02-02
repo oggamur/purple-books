@@ -1,29 +1,41 @@
-const Character = function (rase, name, language){
-  this.rase = rase
-  this.name = name
-  this.language = language
+// Базовый класс Персонажа
+const Character = function (race, name, language) {
+  this.race = race;
+  this.name = name;
+  this.language = language;
+};
 
+Character.prototype.speak = function () {
+  console.log(`${this.name} говорит на ${this.language}`);
+};
+
+const Orc = function (race, name, language, weapon) {
+  Character.call(this, race, name, language);
+  this.weapon = weapon;
 }
 
-Character.prototype.talk = function (){
-  return `Говорит на ${this.language}, а зовут его ${this.name}`
-} 
-const ork = new Character('ork', 'Grog', 'Orcish');
-ork.hasWeapon = true;
-ork.shoot = function(){
-  return `${this.name} ударил вас`
+Orc.prototype = Object.create(Character.prototype);
+Orc.prototype.constructor = Orc;
+
+Orc.prototype.attack = function () {
+  console.log(`${this.name} ударяет с помощью ${this.weapon}!`);
+};
+
+const Elf = function (race, name, language, spell){
+  Character.call(this, race, name, language);
+  this.spell = spell;
 }
 
-const elf = new Character('elf', 'Ditore', 'Elvish');
-elf.spellTypes = ['защита', 'нападение'];
-elf.spells = ['safarius', 'chromius', 'firefoxius']
+Elf.prototype = Object.create(Character.prototype);
+Elf.prototype.constructor = Elf;
 
-elf.createSpell = function(spell){
-  this.spells.push(spell);
-  return `Вы добавили заклинание ${spell}, теперь в вашем распоряжении заклинания: ${this.spells.join(', ')}`
+Elf.prototype.createSpell = function (){
+  console.log(`Вы создали заклинание ${this.spell}`);
 }
 
-console.log(ork.talk());
-console.log(ork.shoot());
-console.log(elf.talk());
-console.log(elf.createSpell('spyrus'));
+const elf = new Elf('Эльф', 'Леголас', 'Эльфийский', 'Огонь');
+elf.speak();
+elf.createSpell();
+const orc = new Orc('Орк', 'Гром', 'Оркский', 'Топор');
+orc.speak();
+orc.attack();
