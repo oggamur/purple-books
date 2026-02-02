@@ -1,18 +1,29 @@
-const timer = document.querySelector('.new-year-timer');
+const Character = function (rase, name, language){
+  this.rase = rase
+  this.name = name
+  this.language = language
 
-function setTimer () {
-  setInterval(() => {
-    const date = new Date();
-    const newYear = new Date(date.getFullYear() + 1, 0, 1);
-    const months = Math.floor((newYear - date) / 1000 / 60 / 60 / 24 / 30);
-    const days = Math.floor((newYear - date) / 1000 / 60 / 60 / 24) - months * 30;
-    const hours = Math.floor((newYear - date) / 1000 / 60 / 60) % 24;
-    const minutes = Math.floor((newYear - date) / 1000 / 60) % 60;
-    const seconds = Math.floor((newYear - date) / 1000) % 60;
-    
-    const time = `${months} месяцев ${days} дней ${hours} часов ${minutes} минут ${seconds} секунд`;
-    timer.innerHTML = time;
-  }, 1000);
 }
 
-setTimer();
+Character.prototype.talk = function (){
+  return `Говорит на ${this.language}, а зовут его ${this.name}`
+} 
+const ork = new Character('ork', 'Grog', 'Orcish');
+ork.hasWeapon = true;
+ork.shoot = function(){
+  return `${this.name} ударил вас`
+}
+
+const elf = new Character('elf', 'Ditore', 'Elvish');
+elf.spellTypes = ['защита', 'нападение'];
+elf.spells = ['safarius', 'chromius', 'firefoxius']
+
+elf.createSpell = function(spell){
+  this.spells.push(spell);
+  return `Вы добавили заклинание ${spell}, теперь в вашем распоряжении заклинания: ${this.spells.join(', ')}`
+}
+
+console.log(ork.talk());
+console.log(ork.shoot());
+console.log(elf.talk());
+console.log(elf.createSpell('spyrus'));
